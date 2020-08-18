@@ -13,9 +13,14 @@ file(GLOB_RECURSE data resources/*)
 # TARGET DEFINITIONS #
 ######################
 
+if(CMAKE_COMPILER_IS_GNUCXX)
+    message(STATUS "GCC detected, adding compile flags")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra")
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
 add_executable(lemontext ${sources} ${data})
 
-target_compile_options(lemontext PUBLIC -std=c++17 -Wall -Wextra)
+target_compile_options(lemontext PUBLIC)
 
 target_include_directories(lemontext PUBLIC src/main)
 
