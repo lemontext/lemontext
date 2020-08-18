@@ -1,6 +1,11 @@
-#include <iostream>
-#include <gtkmm.h>
+#include "helloworld.hh"
+#include <gtkmm/application.h>
 
-int main(int, char**) {
-    std::cout << "Hello, world!\n";
+int main(int argc, char *argv[])
+{
+    auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
+
+    HelloWorld helloWorld;
+
+    return app->run(helloWorld);
 }
