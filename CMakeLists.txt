@@ -1,52 +1,19 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(lemontext VERSION 0.1.0)
 
-#################
-# FILE GLOBBING #
-#################
+find_package(PkgConfig)
 
-file(GLOB_RECURSE sources src/main/*.cc src/main/*.hh)
-file(GLOB_RECURSE sources_test src/test/*.cc)
-file(GLOB_RECURSE data resources/*)
+pkg_check_modules(GTKMM gtkmm-3.0)
 
 ######################
 # TARGET DEFINITIONS #
 ######################
+add_subdirectory(src)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     message(STATUS "GCC detected, adding compile flags")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra")
 endif(CMAKE_COMPILER_IS_GNUCXX)
-
-add_executable(lemontext ${sources} ${data})
-
-target_compile_options(lemontext PUBLIC)
-
-target_include_directories(lemontext PUBLIC src/main)
-
-file(COPY ${data} DESTINATION resources)
-
-################
-# DEPENDENCIES #
-################
-find_package(GTest)
-
-if(GTEST_FOUND)
-    add_executable(unit_tests ${sources_test} ${sources})
-
-    target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
-
-    set_target_properties(lemontext PROPERTIES ENABLE_EXPORTS on)
-
-    target_link_libraries(unit_tests PUBLIC
-        ${GTEST_BOTH_LIBRARIES}
-        lemontext
-    )
-
-    target_include_directories(unit_tests PUBLIC
-        ${GTEST_INCLUDE_DIRS}
-    )
-endif()
 
 #############
 # PACKAGING #
