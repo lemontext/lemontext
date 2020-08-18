@@ -15,7 +15,7 @@ file(GLOB_RECURSE data resources/*)
 
 add_executable(lemontext ${sources} ${data})
 
-target_compile_options(lemontext PUBLIC -std=c++17 -Wall -Wfloat-conversion)
+target_compile_options(lemontext PUBLIC -std=c++17 -Wall -Wextra)
 
 target_include_directories(lemontext PUBLIC src/main)
 
